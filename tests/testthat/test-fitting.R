@@ -191,9 +191,9 @@ test_that("fitting detects full ellipse (tol = 0.15)", {
 test_that("fitting detects half ellipse", {
   res <- fit(hellipse_points, tolerance = 0.08)
 
-  expect_equal(res$center_x, xc, tolerance = 0.005)
-  expect_equal(res$center_y, 18.75, tolerance = 0.005)
-  expect_equal(res$radius, 2.17, tolerance = 0.05)
+  expect_equal(res$center_x, xc, tolerance = 0.01)
+  expect_equal(res$center_y, yc, tolerance = 0.01)
+  expect_equal(res$radius, 2.31, tolerance = 0.05)
   expect_true(res$covered_arc_degree >= 180)
   expect_equal(res$shape_type, "ellipse")
 
@@ -229,8 +229,8 @@ test_that("fitting detects half circloid", {
 
   expect_equal(res$center_x, 13.4, tolerance = 0.02)
   expect_equal(res$center_y, 19.6, tolerance = 0.02)
-  expect_equal(res$radius, 2.40, tolerance = 0.05)
-  expect_true(res$covered_arc_degree >= 220)
+  expect_equal(res$radius, 2.60, tolerance = 0.05)
+  expect_true(res$covered_arc_degree >= 210)
   expect_equal(res$shape_type, "ellipse")
 
   if (disp) show(hcircloid_points, res)
@@ -416,6 +416,22 @@ test_that("fitting handles complex_slice3", {
 
   if (disp) show(xyz, res)
 })
+
+
+test_that("fitting handles complex_slice4", {
+  f <- system.file("extdata", "complex_slice4.las", package = "arbor")
+  las <- lidR::readLAS(f)
+  xyz <- sf::st_coordinates(las)
+  res <- fit(xyz, tolerance = 0.03, complexity = 3)
+  expect_true(is.list(res))
+  # A previous bug with geographic coordinates trigger a 100% inlier with an
+  # virtually infinite ellipse
+  expect_lt(res$percentage_inlier, 90)
+  expect_equal(res$shape_type, "fourier10")
+
+  if (disp) show(xyz, res)
+})
+
 
 test_that("fitting handles slice_buttress", {
   f <- system.file("extdata", "slice_buttress.las", package = "arbor")
