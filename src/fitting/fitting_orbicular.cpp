@@ -26,6 +26,7 @@
 #include <algorithm>
 #include <cmath>
 #include <set>
+#include <stdexcept>
 
 namespace arbor::utils::fitting {
 
