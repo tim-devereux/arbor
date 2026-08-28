@@ -9,3 +9,6 @@ Makefile
 .qmake.stash
 ^compile_commands\.json$
 ^\.cache$
+^Dockerfile$
+^\.dockerignore$
+^docker$

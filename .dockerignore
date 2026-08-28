@@ -1,0 +1,27 @@
+# VCS / IDE
+.git
+.github
+.Rproj.user
+*.Rproj
+*.Rhistory
+.RData
+.Ruserdata
+
+# Qt / local build artifacts
+*.pro
+libarbor/
+Makefile
+.qmake.stash
+compile_commands.json
+.cache
+
+# Compiled objects / shared libs from a host build
+src/**/*.o
+src/**/*.so
+src/*.o
+src/*.so
+
+# Docker
+Dockerfile
+.dockerignore
+docker/
