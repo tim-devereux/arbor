@@ -14,8 +14,7 @@ PKG_CPPFLAGS = -DUSING_R -DNDEBUG \
   -I./vendor \
   -I./vendor/ptd \
   -I./vendor/libqsm \
-  -I./R \
-  -I/usr/include/eigen3
+  -I./R
 
 # OpenMP support
 PKG_CXXFLAGS = $(SHLIB_OPENMP_CXXFLAGS)
