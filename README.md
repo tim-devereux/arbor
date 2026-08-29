@@ -54,7 +54,7 @@ las <- wood_likelihood(las)
 las <- segment_semantic(las)
 see <- find_seeds(las)
 las <- segment_instance(las, see)
-las <- flag_buffer(las, see, -0.75)
+las <- flag_buffer(las, see, -0.75) # don't use 0.75 in real data
 las <- flag_small_trees(las, 1)
 qsf <- qsf(las)
 
