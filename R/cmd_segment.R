@@ -98,7 +98,7 @@ Other:
   its_dir         <- file.path(dirname(base), "its")
 
   crs = sf::NA_crs_
-  if (epsg != 0) crs <- st_crs(paste0("EPSG:", epsg)) 
+  if (epsg != 0) crs <- st_crs(paste0("EPSG:", epsg))
 
   # --- Configuration Log ---
   cat("
@@ -125,7 +125,7 @@ Exports
   gc()
 
   if (!is.na(crs)) st_crs(las) <- crs
-    
+
   cat("Hybrid homogeneization\n")
   las <- hybrid_homogeneization(las)
   gc()
@@ -168,7 +168,7 @@ Exports
 
   cat("Cleaning segmentation\n")
   las <- flag_small_trees(las, max_height = min_tree_height)
-  las <- flag_buffer(trees, las, -buffer)
+  las <- flag_buffer(las, see, -buffer)
 
   cat("Colorization\n")
   las <- colorize_trees(las)
