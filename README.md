@@ -31,6 +31,26 @@ It handles real-world, noisy data, leaf-on scans, automatically without requirin
 install.packages('arbor', repos = c('https://r-lidar.r-universe.dev', 'https://cloud.r-project.org'))
 ```
 
+### Docker
+
+A prebuilt image (arbor plus the geospatial R stack, from the repo-root
+`Dockerfile`) is published to GitHub Packages on every push to `main`:
+
+```bash
+docker pull ghcr.io/tim-devereux/arbor:latest
+docker run --rm -it -v "$PWD:/work" ghcr.io/tim-devereux/arbor:latest
+```
+
+Tags: `latest` (default branch), `main`, `v<x.y.z>` / `v<x.y>` for releases,
+and `sha-<short>` for a specific commit.
+
+To get RStudio Server in the browser against that image instead of a local
+build:
+
+```bash
+IMAGE=ghcr.io/tim-devereux/arbor:latest docker/rstudio.sh up
+```
+
 ## Learn more
 
 The **[Arbor Book](https://r-lidar.github.io/arbor_book/)** is a complete, illustrated guide to the full pipeline with example datasets you can download and run right now.

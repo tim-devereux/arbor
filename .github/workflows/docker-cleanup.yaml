@@ -1,0 +1,39 @@
+# Prune old container versions from GitHub Packages.
+#
+# Every push to `main` publishes a new `sha-<short>` image, and each one leaves
+# untagged layers behind when `latest`/`main` move on. Left alone that grows
+# without bound, so sweep the untagged versions weekly.
+#
+# Only untagged versions are touched: `latest`, `main`, the `v*` release tags
+# and the `buildcache` tag are all safe by construction. A margin of recent
+# untagged versions is kept because the provenance/SBOM attestations that
+# docker-publish attaches are stored as untagged referrers of the current
+# image -- deleting them would not break `docker pull`, but it would break
+# attestation verification for the images still in use.
+on:
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+name: docker-cleanup
+
+concurrency:
+  group: docker-cleanup
+  cancel-in-progress: false
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+
+    steps:
+      - name: Delete untagged container versions
+        uses: actions/delete-package-versions@v5
+        with:
+          owner: ${{ github.repository_owner }}
+          package-name: ${{ github.event.repository.name }}
+          package-type: container
+          delete-only-untagged-versions: true
+          min-versions-to-keep: 10
